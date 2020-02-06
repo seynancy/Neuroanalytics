@@ -55,7 +55,8 @@ ggplot(data = combined2, aes(x = genotype, y = Phenotype)) +
                         ncol = 1, 
                         scales = "free") +
     theme( strip.text = element_text(size = 30)) -> q
-required_n_pages <- n_pages(q) 
+required_n_pages <- n_pages(q)
+q
 
 #for loop to allow us to loop over each SNP to create their separate file
 pdf("genotype.pdf")
