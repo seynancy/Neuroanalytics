@@ -1,5 +1,4 @@
 options(stringsAsFactors=F)
-#loading all required libraries 
 library(data.table)
 library(tidyverse)
 library(tidyr)
@@ -22,7 +21,7 @@ as.matrix(ped)
 mat = 1:ncol(ped)
 ped = ped[ , mat[mat%%2!=0] ] + ped[ , mat[mat%%2==0] ] #adding the genotype values so that genotypes of 1 1 = 2, 2 1=3, 2 2= 4. This will allow us to easily assign it to homozygous, heterozygous etc
 
-#recoding numeric genotypes as NA, homozygous,and heterozygous
+#recoding numeric genotypes as missing, homozygous,and heterozygous
 ped2 = ped[,c(1:100)] #selecting for the first 100 genotypes
 map2 = map[c(1:100),] #also selecting for the first 100 SNPs
 ped2[ped2==0] = NA #marking missing genotypes as NA values. SNPs with these will be marked as NA on the plots
@@ -31,10 +30,8 @@ ped2[ped2==3] = c("heterozygous")
 ped2[ped2==4] = c("homozyg2")
 f_ped = ped2 #changing the name of ped2 to final ped(f_ped)
 
-
-#next I will rotate the map file and fit it to f_ped using data.table library
-map2 = transpose(map)
-
+#I will set the colnames of f_ped to correspond with the SNP names in the map file
+colnames(f_ped) = map2$SNP
 
 qt2 =  qt[,c(-2)] #to select for phenotype and sample ID since we do not need the middle column in original qt file
 combined =  cbind(qt2, f_ped) #to combine the datasets into one large file 
@@ -55,8 +52,9 @@ ggplot(data = combined2, aes(x = genotype, y = Phenotype)) +
                         ncol = 1, 
                         scales = "free") +
     theme( strip.text = element_text(size = 30)) -> q
-required_n_pages <- n_pages(q)
+required_n_pages <- n_pages(q) 
 q
+
 
 #for loop to allow us to loop over each SNP to create their separate file
 pdf("genotype.pdf")
