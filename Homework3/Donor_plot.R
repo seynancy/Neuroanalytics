@@ -29,6 +29,7 @@ ggplot(data = combined_df, aes(x = tp, y = data)) +
                         scales = "free") +
     theme( strip.text = element_text(size = 30)) -> q
 required_n_pages <- n_pages(q) 
+q
 
 #for loop to allow us to loop over each donor to create their separate file. Because my graph was created baseded 
 #on Homework1 files, I have donor1 graph followed by donor10. This is the same for the tps on the x-axis.
