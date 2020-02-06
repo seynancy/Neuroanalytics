@@ -1,4 +1,5 @@
 options(stringsAsFactors=F)
+#loading all required libraries
 library(data.table)
 library(tidyverse)
 library(tidyr)
@@ -29,7 +30,7 @@ ped2[f_ped==3] = c("heterozygous")
 ped2[f_ped==4] = c("homozyg2")
 f_ped = ped[,c(1:100)] #selecting for just the first 100 genotypes
 
-#next I will rotate the map file and fit it to f_ped using data.table library
+#next I will rotate the map file from column to row to match the SNP names to the f_ped using data.table library
 map2 = transpose(map)
 map2 = map2[c(-2),] #to select for jus SNP names
 
@@ -54,7 +55,7 @@ ggplot(data = combined2, aes(x = genotype, y = phenotype)) +
     theme( strip.text = element_text(size = 30)) -> q
 required_n_pages <- n_pages(q) 
 
-#for loop to allow us to loop over each SNP to create their separate file
+#for loop to allow us to loop over each SNP to generate separate files
 pdf("genotype.pdf")
 for(i in 1:required_n_pages){
     ggplot(data = combined2, aes(x = genotype, y = phenotype)) +   
