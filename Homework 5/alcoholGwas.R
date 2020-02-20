@@ -13,10 +13,9 @@ alc5 = filter(alc5,pval<1e-04) #selecting for p<1*10^-4
 f_alc = mutate(alc5,logP =-log10(pval)) #adding an extra column to calculate -log10 of pval
 
 #plotting 
- ggplot(chr4.3, aes(x=variant, y=logP)) +
+ ggplot(f_alc, aes(x=variant, y=logP)) +
     geom_point() +
     labs (title = "Alcohol Manhattan", x="Position",y= "-log10P") ->AlcoholManhattan
  
  ggsave("AlcoholManhattan.pdf")
-
 
