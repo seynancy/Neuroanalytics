@@ -21,14 +21,14 @@ mod = lm(data$Phenotype~data$Genotype)
 obs = coef(mod)[2]
  
 #getting the pvalues
-pval = length(which(perms$nullperms < -obs)) + length(which(perms$nullperms > obs))/1e6 #to get the two sided pval. Pval = 801929.8
+pval = (length(which(perms$nullperms > obs)) + length(which(perms$nullperms < -obs)))/1e6  #to get the two sided pval.
 
 #generating the historgram
 ggplot(data=perms) +
     geom_histogram(mapping=aes(x=nullperms)) +
     geom_vline(mapping=aes(xintercept=obs)) +
     geom_vline(mapping=aes(xintercept=-obs)) +
-    ggtitle("801929.8")
+    ggtitle("1.602478")
 
 ggsave('histogram.png')
 
